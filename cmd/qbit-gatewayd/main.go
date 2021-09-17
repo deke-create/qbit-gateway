@@ -1,5 +1,7 @@
 package main
 
+import "github.com/tendermint/spm-extras/wasmcmd"
+
 import (
 	"os"
 
@@ -16,6 +18,8 @@ func main() {
 		app.Name,
 		app.ModuleBasics,
 		app.New,
+		cosmoscmd.AddSubCmd(wasmcmd.GenesisWasmMsgCmd(app.DefaultNodeHome)),
+		cosmoscmd.CustomizeStartCmd(wasmcmd.AddModuleInitFlags),
 		// this line is used by starport scaffolding # root/arguments
 	)
 	if err := svrcmd.Execute(rootCmd, app.DefaultNodeHome); err != nil {

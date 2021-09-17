@@ -3,6 +3,7 @@ module github.com/deke-create/qbit-gateway
 go 1.16
 
 require (
+	github.com/CosmWasm/wasmd v0.16.0
 	github.com/cosmos/cosmos-sdk v0.42.6
 	github.com/gogo/protobuf v1.3.3
 	github.com/google/go-cmp v0.5.6 // indirect
@@ -12,6 +13,7 @@ require (
 	github.com/spf13/cobra v1.1.3
 	github.com/stretchr/testify v1.7.0
 	github.com/tendermint/spm v0.1.4
+	github.com/tendermint/spm-extras v0.1.0
 	github.com/tendermint/tendermint v0.34.11
 	github.com/tendermint/tm-db v0.6.4
 	google.golang.org/genproto v0.0.0-20210903162649-d08c68adba83
