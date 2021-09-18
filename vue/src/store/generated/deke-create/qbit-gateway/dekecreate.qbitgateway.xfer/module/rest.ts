@@ -20,7 +20,9 @@ export interface RpcStatus {
   details?: ProtobufAny[];
 }
 
-export type XferMsgActionResponse = object;
+export interface XferMsgActionResponse {
+  id?: string;
+}
 
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;

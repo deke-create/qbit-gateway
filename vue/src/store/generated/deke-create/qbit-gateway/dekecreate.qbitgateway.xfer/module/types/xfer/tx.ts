@@ -6,24 +6,22 @@ export const protobufPackage = 'dekecreate.qbitgateway.xfer'
 /** this line is used by starport scaffolding # proto/tx/message */
 export interface MsgAction {
   creator: string
-  id: string
   action: Uint8Array
 }
 
-export interface MsgActionResponse {}
+export interface MsgActionResponse {
+  id: string
+}
 
-const baseMsgAction: object = { creator: '', id: '' }
+const baseMsgAction: object = { creator: '' }
 
 export const MsgAction = {
   encode(message: MsgAction, writer: Writer = Writer.create()): Writer {
     if (message.creator !== '') {
       writer.uint32(10).string(message.creator)
     }
-    if (message.id !== '') {
-      writer.uint32(18).string(message.id)
-    }
     if (message.action.length !== 0) {
-      writer.uint32(26).bytes(message.action)
+      writer.uint32(18).bytes(message.action)
     }
     return writer
   },
@@ -39,9 +37,6 @@ export const MsgAction = {
           message.creator = reader.string()
           break
         case 2:
-          message.id = reader.string()
-          break
-        case 3:
           message.action = reader.bytes()
           break
         default:
@@ -59,11 +54,6 @@ export const MsgAction = {
     } else {
       message.creator = ''
     }
-    if (object.id !== undefined && object.id !== null) {
-      message.id = String(object.id)
-    } else {
-      message.id = ''
-    }
     if (object.action !== undefined && object.action !== null) {
       message.action = bytesFromBase64(object.action)
     }
@@ -73,7 +63,6 @@ export const MsgAction = {
   toJSON(message: MsgAction): unknown {
     const obj: any = {}
     message.creator !== undefined && (obj.creator = message.creator)
-    message.id !== undefined && (obj.id = message.id)
     message.action !== undefined && (obj.action = base64FromBytes(message.action !== undefined ? message.action : new Uint8Array()))
     return obj
   },
@@ -85,11 +74,6 @@ export const MsgAction = {
     } else {
       message.creator = ''
     }
-    if (object.id !== undefined && object.id !== null) {
-      message.id = object.id
-    } else {
-      message.id = ''
-    }
     if (object.action !== undefined && object.action !== null) {
       message.action = object.action
     } else {
@@ -99,10 +83,13 @@ export const MsgAction = {
   }
 }
 
-const baseMsgActionResponse: object = {}
+const baseMsgActionResponse: object = { id: '' }
 
 export const MsgActionResponse = {
-  encode(_: MsgActionResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgActionResponse, writer: Writer = Writer.create()): Writer {
+    if (message.id !== '') {
+      writer.uint32(10).string(message.id)
+    }
     return writer
   },
 
@@ -113,6 +100,9 @@ export const MsgActionResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32()
       switch (tag >>> 3) {
+        case 1:
+          message.id = reader.string()
+          break
         default:
           reader.skipType(tag & 7)
           break
@@ -121,18 +111,29 @@ export const MsgActionResponse = {
     return message
   },
 
-  fromJSON(_: any): MsgActionResponse {
+  fromJSON(object: any): MsgActionResponse {
     const message = { ...baseMsgActionResponse } as MsgActionResponse
+    if (object.id !== undefined && object.id !== null) {
+      message.id = String(object.id)
+    } else {
+      message.id = ''
+    }
     return message
   },
 
-  toJSON(_: MsgActionResponse): unknown {
+  toJSON(message: MsgActionResponse): unknown {
     const obj: any = {}
+    message.id !== undefined && (obj.id = message.id)
     return obj
   },
 
-  fromPartial(_: DeepPartial<MsgActionResponse>): MsgActionResponse {
+  fromPartial(object: DeepPartial<MsgActionResponse>): MsgActionResponse {
     const message = { ...baseMsgActionResponse } as MsgActionResponse
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id
+    } else {
+      message.id = ''
+    }
     return message
   }
 }

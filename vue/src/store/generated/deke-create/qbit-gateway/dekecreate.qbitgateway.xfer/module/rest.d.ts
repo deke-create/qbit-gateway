@@ -7,7 +7,9 @@ export interface RpcStatus {
     message?: string;
     details?: ProtobufAny[];
 }
-export declare type XferMsgActionResponse = object;
+export interface XferMsgActionResponse {
+    id?: string;
+}
 export declare type QueryParamsType = Record<string | number, any>;
 export declare type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 export interface FullRequestParams extends Omit<RequestInit, "body"> {

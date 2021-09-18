@@ -14,19 +14,18 @@ var _ = strconv.Itoa(0)
 
 func CmdAction() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "action [id] [action]",
+		Use:   "action [action]",
 		Short: "Broadcast message action",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			argsId := string(args[0])
-			argsAction := string(args[1])
+			argsAction := string(args[0])
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgAction(clientCtx.GetFromAddress().String(), string(argsId), []byte(argsAction))
+			msg := types.NewMsgAction(clientCtx.GetFromAddress().String(), []byte(argsAction))
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}

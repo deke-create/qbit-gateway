@@ -28481,6 +28481,9 @@ definitions:
       Query/SmartContractState RPC method
   dekecreate.qbitgateway.xfer.MsgActionResponse:
     type: object
+    properties:
+      id:
+        type: string
   ibc.applications.transfer.v1.DenomTrace:
     type: object
     properties:

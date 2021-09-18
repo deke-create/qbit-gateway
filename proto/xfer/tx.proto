@@ -14,9 +14,9 @@ service Msg {
 // this line is used by starport scaffolding # proto/tx/message
 message MsgAction {
   string creator = 1;
-  string id = 2;
-  bytes action = 3;
+  bytes action = 2;
 }
 
 message MsgActionResponse {
+  string id = 1;
 }

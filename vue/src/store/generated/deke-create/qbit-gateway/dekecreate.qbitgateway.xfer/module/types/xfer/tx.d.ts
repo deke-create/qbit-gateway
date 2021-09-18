@@ -3,10 +3,10 @@ export declare const protobufPackage = "dekecreate.qbitgateway.xfer";
 /** this line is used by starport scaffolding # proto/tx/message */
 export interface MsgAction {
     creator: string;
-    id: string;
     action: Uint8Array;
 }
 export interface MsgActionResponse {
+    id: string;
 }
 export declare const MsgAction: {
     encode(message: MsgAction, writer?: Writer): Writer;
@@ -16,11 +16,11 @@ export declare const MsgAction: {
     fromPartial(object: DeepPartial<MsgAction>): MsgAction;
 };
 export declare const MsgActionResponse: {
-    encode(_: MsgActionResponse, writer?: Writer): Writer;
+    encode(message: MsgActionResponse, writer?: Writer): Writer;
     decode(input: Reader | Uint8Array, length?: number): MsgActionResponse;
-    fromJSON(_: any): MsgActionResponse;
-    toJSON(_: MsgActionResponse): unknown;
-    fromPartial(_: DeepPartial<MsgActionResponse>): MsgActionResponse;
+    fromJSON(object: any): MsgActionResponse;
+    toJSON(message: MsgActionResponse): unknown;
+    fromPartial(object: DeepPartial<MsgActionResponse>): MsgActionResponse;
 };
 /** Msg defines the Msg service. */
 export interface Msg {

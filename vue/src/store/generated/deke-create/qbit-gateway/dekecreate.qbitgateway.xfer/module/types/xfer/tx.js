@@ -1,17 +1,14 @@
 /* eslint-disable */
 import { Reader, Writer } from 'protobufjs/minimal';
 export const protobufPackage = 'dekecreate.qbitgateway.xfer';
-const baseMsgAction = { creator: '', id: '' };
+const baseMsgAction = { creator: '' };
 export const MsgAction = {
     encode(message, writer = Writer.create()) {
         if (message.creator !== '') {
             writer.uint32(10).string(message.creator);
         }
-        if (message.id !== '') {
-            writer.uint32(18).string(message.id);
-        }
         if (message.action.length !== 0) {
-            writer.uint32(26).bytes(message.action);
+            writer.uint32(18).bytes(message.action);
         }
         return writer;
     },
@@ -26,9 +23,6 @@ export const MsgAction = {
                     message.creator = reader.string();
                     break;
                 case 2:
-                    message.id = reader.string();
-                    break;
-                case 3:
                     message.action = reader.bytes();
                     break;
                 default:
@@ -46,12 +40,6 @@ export const MsgAction = {
         else {
             message.creator = '';
         }
-        if (object.id !== undefined && object.id !== null) {
-            message.id = String(object.id);
-        }
-        else {
-            message.id = '';
-        }
         if (object.action !== undefined && object.action !== null) {
             message.action = bytesFromBase64(object.action);
         }
@@ -60,7 +48,6 @@ export const MsgAction = {
     toJSON(message) {
         const obj = {};
         message.creator !== undefined && (obj.creator = message.creator);
-        message.id !== undefined && (obj.id = message.id);
         message.action !== undefined && (obj.action = base64FromBytes(message.action !== undefined ? message.action : new Uint8Array()));
         return obj;
     },
@@ -72,12 +59,6 @@ export const MsgAction = {
         else {
             message.creator = '';
         }
-        if (object.id !== undefined && object.id !== null) {
-            message.id = object.id;
-        }
-        else {
-            message.id = '';
-        }
         if (object.action !== undefined && object.action !== null) {
             message.action = object.action;
         }
@@ -87,9 +68,12 @@ export const MsgAction = {
         return message;
     }
 };
-const baseMsgActionResponse = {};
+const baseMsgActionResponse = { id: '' };
 export const MsgActionResponse = {
-    encode(_, writer = Writer.create()) {
+    encode(message, writer = Writer.create()) {
+        if (message.id !== '') {
+            writer.uint32(10).string(message.id);
+        }
         return writer;
     },
     decode(input, length) {
@@ -99,6 +83,9 @@ export const MsgActionResponse = {
         while (reader.pos < end) {
             const tag = reader.uint32();
             switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.string();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -106,16 +93,29 @@ export const MsgActionResponse = {
         }
         return message;
     },
-    fromJSON(_) {
+    fromJSON(object) {
         const message = { ...baseMsgActionResponse };
+        if (object.id !== undefined && object.id !== null) {
+            message.id = String(object.id);
+        }
+        else {
+            message.id = '';
+        }
         return message;
     },
-    toJSON(_) {
+    toJSON(message) {
         const obj = {};
+        message.id !== undefined && (obj.id = message.id);
         return obj;
     },
-    fromPartial(_) {
+    fromPartial(object) {
         const message = { ...baseMsgActionResponse };
+        if (object.id !== undefined && object.id !== null) {
+            message.id = object.id;
+        }
+        else {
+            message.id = '';
+        }
         return message;
     }
 };

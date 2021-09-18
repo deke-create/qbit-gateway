@@ -7,10 +7,9 @@ import (
 
 var _ sdk.Msg = &MsgAction{}
 
-func NewMsgAction(creator string, id string, action []byte) *MsgAction {
+func NewMsgAction(creator string, action []byte) *MsgAction {
 	return &MsgAction{
 		Creator: creator,
-		Id:      id,
 		Action:  action,
 	}
 }
