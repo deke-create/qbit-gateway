@@ -28479,6 +28479,8 @@ definitions:
     title: |-
       QuerySmartContractStateResponse is the response type for the
       Query/SmartContractState RPC method
+  dekecreate.qbitgateway.xfer.MsgActionResponse:
+    type: object
   ibc.applications.transfer.v1.DenomTrace:
     type: object
     properties:

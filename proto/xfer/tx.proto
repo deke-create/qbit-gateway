@@ -8,6 +8,15 @@ option go_package = "github.com/deke-create/qbit-gateway/x/xfer/types";
 // Msg defines the Msg service.
 service Msg {
     // this line is used by starport scaffolding # proto/tx/rpc
+  rpc Action(MsgAction) returns (MsgActionResponse);
 }
 
 // this line is used by starport scaffolding # proto/tx/message
+message MsgAction {
+  string creator = 1;
+  string id = 2;
+  string action = 3;
+}
+
+message MsgActionResponse {
+}
