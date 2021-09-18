@@ -89,6 +89,9 @@ import (
 	qbitgatewaymodule "github.com/deke-create/qbit-gateway/x/qbitgateway"
 	qbitgatewaymodulekeeper "github.com/deke-create/qbit-gateway/x/qbitgateway/keeper"
 	qbitgatewaymoduletypes "github.com/deke-create/qbit-gateway/x/qbitgateway/types"
+	xfermodule "github.com/deke-create/qbit-gateway/x/xfer"
+	xfermodulekeeper "github.com/deke-create/qbit-gateway/x/xfer/keeper"
+	xfermoduletypes "github.com/deke-create/qbit-gateway/x/xfer/types"
 	"github.com/tendermint/spm-extras/wasmcmd"
 
 	"github.com/tendermint/spm/cosmoscmd"
@@ -150,6 +153,7 @@ var (
 		transfer.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
+		xfermodule.AppModuleBasic{},
 		wasm.AppModuleBasic{},
 		qbitgatewaymodule.AppModuleBasic{},
 	)
@@ -219,6 +223,8 @@ type App struct {
 	ScopedTransferKeeper capabilitykeeper.ScopedKeeper
 
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
+
+	XferKeeper       xfermodulekeeper.Keeper
 	wasmKeeper       wasm.Keeper
 	scopedWasmKeeper capabilitykeeper.ScopedKeeper
 
@@ -257,6 +263,7 @@ func New(
 		govtypes.StoreKey, paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey,
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
+		xfermoduletypes.StoreKey,
 		wasm.StoreKey,
 		qbitgatewaymoduletypes.StoreKey,
 	)
@@ -362,6 +369,13 @@ func New(
 	)
 	qbitgatewayModule := qbitgatewaymodule.NewAppModule(appCodec, app.QbitgatewayKeeper)
 
+	app.XferKeeper = *xfermodulekeeper.NewKeeper(
+		appCodec,
+		keys[xfermoduletypes.StoreKey],
+		keys[xfermoduletypes.MemStoreKey],
+	)
+	xferModule := xfermodule.NewAppModule(appCodec, app.XferKeeper)
+
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	wasmDir := filepath.Join(homePath, "wasm")
 
@@ -434,6 +448,7 @@ func New(
 		params.NewAppModule(app.ParamsKeeper),
 		transferModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
+		xferModule,
 		wasm.NewAppModule(appCodec, &app.wasmKeeper, app.StakingKeeper),
 		qbitgatewayModule,
 	)
@@ -469,6 +484,7 @@ func New(
 		evidencetypes.ModuleName,
 		ibctransfertypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
+		xfermoduletypes.ModuleName,
 		wasm.ModuleName,
 		qbitgatewaymoduletypes.ModuleName,
 	)
@@ -659,6 +675,7 @@ func initParamsKeeper(appCodec codec.BinaryMarshaler, legacyAmino *codec.LegacyA
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName)
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
+	paramsKeeper.Subspace(xfermoduletypes.ModuleName)
 	paramsKeeper.Subspace(wasm.ModuleName)
 	paramsKeeper.Subspace(qbitgatewaymoduletypes.ModuleName)
 

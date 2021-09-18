@@ -1,0 +1,12 @@
+syntax = "proto3";
+package dekecreate.qbitgateway.xfer;
+
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/deke-create/qbit-gateway/x/xfer/types";
+
+// GenesisState defines the xfer module's genesis state.
+message GenesisState {
+    // this line is used by starport scaffolding # genesis/proto/state
+    // this line is used by starport scaffolding # ibc/genesis/proto
+}
