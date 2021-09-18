@@ -6,7 +6,7 @@ accounts:
     coins: ["500000000uqbit"]
   - name: deke
     coins: ["500000000uqbit", "100000000ugoi"]
-    address: qbit18uhwjwjh0a2we39cv4k7jgqzv5xgmzgdw2kyjn
+    address: qbit1arr0909gyc33yrfcd3evvuddzv5cf55fhskkdt
   - name: bang
     coins: ["10000000uqbit"]
     address: qbit16306skfzgu2wfcedj0d4zw6h2cfy3juz54gyed

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Reader, Writer } from 'protobufjs/minimal';
 export const protobufPackage = 'dekecreate.qbitgateway.xfer';
-const baseMsgAction = { creator: '', id: '', action: '' };
+const baseMsgAction = { creator: '', id: '' };
 export const MsgAction = {
     encode(message, writer = Writer.create()) {
         if (message.creator !== '') {
@@ -10,8 +10,8 @@ export const MsgAction = {
         if (message.id !== '') {
             writer.uint32(18).string(message.id);
         }
-        if (message.action !== '') {
-            writer.uint32(26).string(message.action);
+        if (message.action.length !== 0) {
+            writer.uint32(26).bytes(message.action);
         }
         return writer;
     },
@@ -29,7 +29,7 @@ export const MsgAction = {
                     message.id = reader.string();
                     break;
                 case 3:
-                    message.action = reader.string();
+                    message.action = reader.bytes();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -53,10 +53,7 @@ export const MsgAction = {
             message.id = '';
         }
         if (object.action !== undefined && object.action !== null) {
-            message.action = String(object.action);
-        }
-        else {
-            message.action = '';
+            message.action = bytesFromBase64(object.action);
         }
         return message;
     },
@@ -64,7 +61,7 @@ export const MsgAction = {
         const obj = {};
         message.creator !== undefined && (obj.creator = message.creator);
         message.id !== undefined && (obj.id = message.id);
-        message.action !== undefined && (obj.action = message.action);
+        message.action !== undefined && (obj.action = base64FromBytes(message.action !== undefined ? message.action : new Uint8Array()));
         return obj;
     },
     fromPartial(object) {
@@ -85,7 +82,7 @@ export const MsgAction = {
             message.action = object.action;
         }
         else {
-            message.action = '';
+            message.action = new Uint8Array();
         }
         return message;
     }
@@ -131,4 +128,32 @@ export class MsgClientImpl {
         const promise = this.rpc.request('dekecreate.qbitgateway.xfer.Msg', 'Action', data);
         return promise.then((data) => MsgActionResponse.decode(new Reader(data)));
     }
+}
+var globalThis = (() => {
+    if (typeof globalThis !== 'undefined')
+        return globalThis;
+    if (typeof self !== 'undefined')
+        return self;
+    if (typeof window !== 'undefined')
+        return window;
+    if (typeof global !== 'undefined')
+        return global;
+    throw 'Unable to locate global object';
+})();
+const atob = globalThis.atob || ((b64) => globalThis.Buffer.from(b64, 'base64').toString('binary'));
+function bytesFromBase64(b64) {
+    const bin = atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; ++i) {
+        arr[i] = bin.charCodeAt(i);
+    }
+    return arr;
+}
+const btoa = globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, 'binary').toString('base64'));
+function base64FromBytes(arr) {
+    const bin = [];
+    for (let i = 0; i < arr.byteLength; ++i) {
+        bin.push(String.fromCharCode(arr[i]));
+    }
+    return btoa(bin.join(''));
 }

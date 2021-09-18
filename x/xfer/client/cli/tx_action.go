@@ -26,7 +26,7 @@ func CmdAction() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgAction(clientCtx.GetFromAddress().String(), string(argsId), string(argsAction))
+			msg := types.NewMsgAction(clientCtx.GetFromAddress().String(), string(argsId), []byte(argsAction))
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}

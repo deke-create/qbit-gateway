@@ -15,7 +15,7 @@ service Msg {
 message MsgAction {
   string creator = 1;
   string id = 2;
-  string action = 3;
+  bytes action = 3;
 }
 
 message MsgActionResponse {

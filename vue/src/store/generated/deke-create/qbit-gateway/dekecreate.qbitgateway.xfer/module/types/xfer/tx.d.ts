@@ -4,7 +4,7 @@ export declare const protobufPackage = "dekecreate.qbitgateway.xfer";
 export interface MsgAction {
     creator: string;
     id: string;
-    action: string;
+    action: Uint8Array;
 }
 export interface MsgActionResponse {
 }
