@@ -15,6 +15,7 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_xfer"
+	TypeStoreKey = "contract_types"
 
 	// this line is used by starport scaffolding # ibc/keys/name
 )

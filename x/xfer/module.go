@@ -3,6 +3,8 @@ package xfer
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/cosmos/cosmos-sdk/baseapp"
+
 	// this line is used by starport scaffolding # 1
 
 	"github.com/gorilla/mux"
@@ -101,12 +103,14 @@ type AppModule struct {
 	AppModuleBasic
 
 	keeper keeper.Keeper
+	baseApp baseapp.BaseApp
 }
 
-func NewAppModule(cdc codec.Marshaler, keeper keeper.Keeper) AppModule {
+func NewAppModule(cdc codec.Marshaler, keeper keeper.Keeper, basepp baseapp.BaseApp) AppModule {
 	return AppModule{
 		AppModuleBasic: NewAppModuleBasic(cdc),
 		keeper:         keeper,
+		baseApp:        basepp,
 	}
 }
 
@@ -117,7 +121,7 @@ func (am AppModule) Name() string {
 
 // Route returns the capability module's message routing key.
 func (am AppModule) Route() sdk.Route {
-	return sdk.NewRoute(types.RouterKey, NewHandler(am.keeper))
+	return sdk.NewRoute(types.RouterKey, NewHandler(am.keeper, "localhost:8989", am.baseApp))
 }
 
 // QuerierRoute returns the capability module's query routing key.

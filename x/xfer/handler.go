@@ -2,6 +2,7 @@ package xfer
 
 import (
 	"fmt"
+	"github.com/cosmos/cosmos-sdk/baseapp"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -10,8 +11,8 @@ import (
 )
 
 // NewHandler ...
-func NewHandler(k keeper.Keeper) sdk.Handler {
-	msgServer := keeper.NewMsgServerImpl(k)
+func NewHandler(k keeper.Keeper, serverAddress string, baseapp baseapp.BaseApp) sdk.Handler {
+	msgServer := keeper.NewMsgServerImpl(k, baseapp, serverAddress)
 
 	return func(ctx sdk.Context, msg sdk.Msg) (*sdk.Result, error) {
 		ctx = ctx.WithEventManager(sdk.NewEventManager())

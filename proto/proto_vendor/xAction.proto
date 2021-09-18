@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package xfer;
+
+service AppConnect {
+  // Only the first ActionOrContract will contain an action, all the rest will be contract data
+  rpc ExecuteAction(stream ActionOrContract) returns (stream ContractRequest) {}
+}
+
+message ActionOrContract {
+  oneof data {
+    xAction action = 1;
+    ContractResponse contract = 2;
+  }
+}
+
+message xAction {
+  bytes address = 1;
+  bytes data = 2;
+  bytes blockheight = 3;
+}
+
+message ContractRequest {
+  bytes address = 1;
+  // Warning, if data is set, writes the contract and sends no reply, else reads.
+  bytes data = 2;
+  bytes typeName = 3;
+}
+
+message ContractResponse {
+  bytes address = 1;
+  bytes data = 2;
+  bytes typeName = 3;
+}

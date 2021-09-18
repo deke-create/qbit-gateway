@@ -98,7 +98,7 @@ import (
 )
 
 const (
-	AccountAddressPrefix = "cosmos"
+	AccountAddressPrefix = "qbit"
 	Name                 = "qbit-gateway"
 )
 
@@ -373,8 +373,9 @@ func New(
 		appCodec,
 		keys[xfermoduletypes.StoreKey],
 		keys[xfermoduletypes.MemStoreKey],
+		keys[xfermoduletypes.TypeStoreKey],
 	)
-	xferModule := xfermodule.NewAppModule(appCodec, app.XferKeeper)
+	xferModule := xfermodule.NewAppModule(appCodec, app.XferKeeper, *app.BaseApp)
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	wasmDir := filepath.Join(homePath, "wasm")
