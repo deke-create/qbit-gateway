@@ -14,6 +14,7 @@ type msgServer struct {
 // NewMsgServerImpl returns an implementation of the MsgServer interface
 // for the provided Keeper.
 func NewMsgServerImpl(keeper Keeper, bApp baseapp.BaseApp, xferServerAddress string) types.MsgServer {
+
 	return &msgServer{Keeper: keeper, XferServerAddress: xferServerAddress, BaseApp: bApp}
 }
 
